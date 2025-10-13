@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSE Team Present</title>
+    <title> BSE Team Present </title>
     <style>
         * {
             margin: 0;
@@ -60,56 +61,16 @@
             width: 100%;
             height: 100%;
             position: relative;
-            transform-style: preserve-3d;
-            transform: rotateX(-15deg) rotateY(15deg);
-            transition: transform 0.5s ease;
-        }
-
-        .cube:hover {
-            transform: rotateX(-15deg) rotateY(15deg) scale(1.05);
-        }
-
-        .cube-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
             overflow: hidden;
-            backface-visibility: visible;
-        }
-
-        .cube-front {
-            transform: translateZ(100px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             background: linear-gradient(45deg, #805ad5, #6b46c1);
         }
 
-        .cube-back {
-            transform: rotateY(180deg) translateZ(100px);
-            background: linear-gradient(45deg, #6b46c1, #553c9a);
-        }
-
-        .cube-right {
-            transform: rotateY(90deg) translateZ(100px);
-            background: linear-gradient(45deg, #9f7aea, #805ad5);
-        }
-
-        .cube-left {
-            transform: rotateY(-90deg) translateZ(100px);
-            background: linear-gradient(45deg, #553c9a, #44337a);
-        }
-
-        .cube-top {
-            transform: rotateX(90deg) translateZ(100px);
-            background: linear-gradient(45deg, #d6bcfa, #9f7aea);
-        }
-
-        .cube-bottom {
-            transform: rotateX(-90deg) translateZ(100px);
-            background: linear-gradient(45deg, #44337a, #322659);
+        .cube:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(159, 122, 234, 0.7);
         }
 
         .cube-image {
@@ -242,6 +203,57 @@
             animation-duration: 30s;
         }
 
+        .owner-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px auto;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .owner-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .owner-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 2px solid #d6bcfa;
+            box-shadow: 0 0 10px rgba(214, 188, 250, 0.5);
+        }
+
+        .owner-details {
+            flex: 1;
+        }
+
+        .owner-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #e9d8fd, #d6bcfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .owner-role {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .owner-description {
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+
         footer {
             margin-top: 60px;
             padding: 20px;
@@ -298,32 +310,22 @@
                 left: 10px;
             }
             
-            .cube-front {
-                transform: translateZ(75px);
-            }
-            
-            .cube-back {
-                transform: rotateY(180deg) translateZ(75px);
-            }
-            
-            .cube-right {
-                transform: rotateY(90deg) translateZ(75px);
-            }
-            
-            .cube-left {
-                transform: rotateY(-90deg) translateZ(75px);
-            }
-            
-            .cube-top {
-                transform: rotateX(90deg) translateZ(75px);
-            }
-            
-            .cube-bottom {
-                transform: rotateX(-90deg) translateZ(75px);
-            }
-            
             .content {
                 margin-top: 40px;
+            }
+            
+            .owner-info {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+            
+            .owner-avatar {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .owner-name {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -339,14 +341,7 @@
     <div class="container">
         <div class="cube-container">
             <div class="cube">
-                <div class="cube-face cube-front">
-                    <img src="https://media.discordapp.net/attachments/1419673724000407674/1427289960335151144/f4d57eaf-234f-4015-b0c2-76ab7c10cf33c.jpg?ex=68ee52dc&is=68ed015c&hm=0512a812ad1879bfb2542d4a36fb87736f7f7d7276ceac059c7e1a512a429fb9&=&format=webp" alt="BSE Team" class="cube-image">
-                </div>
-                <div class="cube-face cube-back"></div>
-                <div class="cube-face cube-right"></div>
-                <div class="cube-face cube-left"></div>
-                <div class="cube-face cube-top"></div>
-                <div class="cube-face cube-bottom"></div>
+                <img src="https://media.discordapp.net/attachments/1419673724000407674/1427289960335151144/f4d57eaf-234f-4015-b0c2-76ab7c10cf33c.jpg?ex=68ee52dc&is=68ed015c&hm=0512a812ad1879bfb2542d4a36fb87736f7f7d7276ceac059c7e1a512a429fb9&=&format=webp" alt="BSE Team" class="cube-image">
             </div>
         </div>
 
@@ -362,8 +357,21 @@
                 <button class="btn btn-border" onclick="showProjects()">Наши проекты</button>
             </div>
 
+            <div id="ownerInfo" class="owner-info" style="display: none;">
+                <div class="owner-header">
+                    <img src="https://cdn.discordapp.com/attachments/1363219380703461618/1427296719468494929/ff20a57a8a3053b148ad6c76b4a6bb57.gif?ex=68ee5927&is=68ed07a7&hm=e4c13a27e5a4e40be2d7ccc0dec883304b2ebf06eb25420b2a3e93026376b995&" alt="g1oof Avatar" class="owner-avatar">
+                    <div class="owner-details">
+                        <div class="owner-name">g1oof</div>
+                        <div class="owner-role">Владелец сервера & Разработчик сайта</div>
+                    </div>
+                </div>
+                <div class="owner-description">
+                    <p>Основатель сообщества BSE Team и создатель этого сайта. Активный разработчик с опытом в создании интерактивных веб-проектов и комьюнити-менеджменте.</p>
+                </div>
+            </div>
+
             <footer class="fade-in">
-                <p>BSE Team Present </p>
+                <p>BSE Team Present | Site developer: g1oof</p>
             </footer>
         </div>
     </div>
@@ -385,7 +393,14 @@
 
         // Функция для показа информации
         function showInfo() {
-            alert('BSE Team - это сообщество единомышленников, создающих интересные проекты вместе!');
+            const ownerInfo = document.getElementById('ownerInfo');
+            
+            if (ownerInfo.style.display === 'none' || ownerInfo.style.display === '') {
+                ownerInfo.style.display = 'block';
+                ownerInfo.classList.add('fade-in');
+            } else {
+                ownerInfo.style.display = 'none';
+            }
             
             // Анимация кнопки
             const button = event.target;
