@@ -1,22 +1,23 @@
-
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Синий сайт с анимациями</title>
+    <title>BSE Team Present</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #1a2a6c, #2d4ba9);
+            background: linear-gradient(135deg, #2d1b69, #6b46c1, #9f7aea);
             color: white;
             min-height: 100vh;
             padding: 20px;
+            overflow-x: hidden;
         }
 
         .container {
@@ -30,9 +31,14 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 10px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #e9d8fd, #d6bcfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleGlow 3s ease-in-out infinite alternate;
         }
 
         .subtitle {
@@ -41,14 +47,80 @@
             margin-bottom: 40px;
         }
 
-        .buttons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
+        .cube-container {
+            perspective: 1000px;
+            width: 300px;
+            height: 300px;
+            margin: 40px auto;
+            position: relative;
         }
 
-        /* Базовые стили для кнопок */
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 15s infinite linear;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            backface-visibility: visible;
+        }
+
+        .cube-front {
+            transform: translateZ(150px);
+            background: linear-gradient(45deg, #805ad5, #6b46c1);
+        }
+
+        .cube-back {
+            transform: rotateY(180deg) translateZ(150px);
+            background: linear-gradient(45deg, #6b46c1, #553c9a);
+        }
+
+        .cube-right {
+            transform: rotateY(90deg) translateZ(150px);
+            background: linear-gradient(45deg, #9f7aea, #805ad5);
+        }
+
+        .cube-left {
+            transform: rotateY(-90deg) translateZ(150px);
+            background: linear-gradient(45deg, #553c9a, #44337a);
+        }
+
+        .cube-top {
+            transform: rotateX(90deg) translateZ(150px);
+            background: linear-gradient(45deg, #d6bcfa, #9f7aea);
+        }
+
+        .cube-bottom {
+            transform: rotateX(-90deg) translateZ(150px);
+            background: linear-gradient(45deg, #44337a, #322659);
+        }
+
+        .cube-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
         .btn {
             padding: 15px 30px;
             font-size: 1.1rem;
@@ -62,57 +134,30 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
+            min-width: 200px;
         }
 
-        /* Анимированная кнопка с пульсацией */
-        .btn-pulse {
-            background: linear-gradient(45deg, #2563eb, #3b82f6);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        .btn-discord {
+            background: linear-gradient(45deg, #7289da, #5b6eae);
+            box-shadow: 0 4px 15px rgba(114, 137, 218, 0.4);
         }
 
-        .btn-pulse:hover {
+        .btn-discord:hover {
             animation: pulse 1s infinite;
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
+            box-shadow: 0 8px 25px rgba(114, 137, 218, 0.6);
         }
 
-        /* Кнопка с заполнением */
-        .btn-fill {
-            background: transparent;
-            border: 2px solid #60a5fa;
-            position: relative;
-            z-index: 1;
+        .btn-purple {
+            background: linear-gradient(45deg, #805ad5, #6b46c1);
+            box-shadow: 0 4px 15px rgba(128, 90, 213, 0.4);
         }
 
-        .btn-fill::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: #60a5fa;
-            transition: left 0.4s ease;
-            z-index: -1;
+        .btn-purple:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(128, 90, 213, 0.6);
         }
 
-        .btn-fill:hover::before {
-            left: 0;
-        }
-
-        /* Кнопка с поднятием */
-        .btn-lift {
-            background: linear-gradient(45deg, #1e40af, #3730a3);
-            box-shadow: 0 6px 0 #1e3a8a, 0 8px 10px rgba(0,0,0,0.3);
-            transition: all 0.1s ease;
-        }
-
-        .btn-lift:active {
-            transform: translateY(6px);
-            box-shadow: 0 0 0 #1e3a8a, 0 0 15px rgba(0,0,0,0.2);
-        }
-
-        /* Кнопка с градиентной обводкой */
         .btn-border {
             background: transparent;
             position: relative;
@@ -125,7 +170,7 @@
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(45deg, #3b82f6, #60a5fa, #93c5fd, #60a5fa, #3b82f6);
+            background: linear-gradient(45deg, #9f7aea, #d6bcfa, #9f7aea, #d6bcfa);
             border-radius: 52px;
             z-index: -1;
             opacity: 0;
@@ -138,18 +183,66 @@
             background-size: 400% 400%;
         }
 
-        /* Анимированный блок */
-        .animated-box {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(45deg, #3b82f6, #60a5fa);
-            margin: 40px auto;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: float 3s ease-in-out infinite;
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: -1;
         }
 
-        /* Ключевые кадры для анимаций */
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-duration: 20s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            left: 80%;
+            animation-duration: 25s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-duration: 15s;
+        }
+
+        .floating-element:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            top: 30%;
+            left: 70%;
+            animation-duration: 30s;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            opacity: 0.7;
+        }
+
+        @keyframes rotateCube {
+            0% { transform: rotateX(0) rotateY(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
         @keyframes pulse {
             0% { transform: scale(1) translateY(-3px); }
             50% { transform: scale(1.05) translateY(-3px); }
@@ -163,8 +256,14 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 10px rgba(214, 188, 250, 0.5); }
+            100% { text-shadow: 0 0 20px rgba(214, 188, 250, 0.8), 0 0 30px rgba(159, 122, 234, 0.6); }
         }
 
         @keyframes fadeInUp {
@@ -178,55 +277,129 @@
             }
         }
 
-        /* Анимация появления элементов */
         .fade-in {
             animation: fadeInUp 0.6s ease-out;
         }
 
-        footer {
-            margin-top: 60px;
-            padding: 20px;
-            opacity: 0.7;
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .cube-container {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .cube-front, .cube-back, .cube-right, .cube-left, .cube-top, .cube-bottom {
+                transform-origin: center;
+            }
+            
+            .cube-front {
+                transform: translateZ(125px);
+            }
+            
+            .cube-back {
+                transform: rotateY(180deg) translateZ(125px);
+            }
+            
+            .cube-right {
+                transform: rotateY(90deg) translateZ(125px);
+            }
+            
+            .cube-left {
+                transform: rotateY(-90deg) translateZ(125px);
+            }
+            
+            .cube-top {
+                transform: rotateX(90deg) translateZ(125px);
+            }
+            
+            .cube-bottom {
+                transform: rotateX(-90deg) translateZ(125px);
+            }
         }
     </style>
 </head>
 <body>
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
     <div class="container">
         <header class="fade-in">
-            <h1>Добро пожаловать в синий мир</h1>
-            <p class="subtitle">Исследуйте магию анимаций и интерактивности</p>
+            <h1>BSE Team Present</h1>
+            <p class="subtitle">Добро пожаловать в наше сообщество</p>
         </header>
 
-        <section class="buttons-grid">
-            <button class="btn btn-pulse" onclick="animateButton(this)">Пульсирующая кнопка</button>
-            <button class="btn btn-fill" onclick="animateButton(this)">Заполняющаяся кнопка</button>
-            <button class="btn btn-lift" onclick="animateButton(this)">Поднимающаяся кнопка</button>
-            <button class="btn btn-border" onclick="animateButton(this)">Градиентная кнопка</button>
-        </section>
+        <div class="cube-container">
+            <div class="cube">
+                <div class="cube-face cube-front">
+                    <img src="https://media.discordapp.net/attachments/1419673724000407674/1427289960335151144/f4d57eaf-234f-4015-b0c2-76ab7c10cf33c.jpg?ex=68ee52dc&is=68ed015c&hm=0512a812ad1879bfb2542d4a36fb87736f7f7d7276ceac059c7e1a512a429fb9&=&format=webp" alt="BSE Team" class="cube-image">
+                </div>
+                <div class="cube-face cube-back"></div>
+                <div class="cube-face cube-right"></div>
+                <div class="cube-face cube-left"></div>
+                <div class="cube-face cube-top"></div>
+                <div class="cube-face cube-bottom"></div>
+            </div>
+        </div>
 
-        <div class="animated-box" id="animatedBox"></div>
+        <div class="buttons-container">
+            <button class="btn btn-discord" onclick="joinDiscord()">Присоединиться к серверу</button>
+            <button class="btn btn-purple" onclick="showInfo()">О нас</button>
+            <button class="btn btn-border" onclick="showProjects()">Наши проекты</button>
+        </div>
 
         <footer class="fade-in">
-            <p>Сайт создан с использованием HTML, CSS и JavaScript</p>
+            <p>BSE Team Present © 2023</p>
         </footer>
     </div>
 
     <script>
-        // Функция для анимации кнопок при клике
-        function animateButton(button) {
-            // Добавляем класс для анимации
-            button.style.transform = 'scale(0.95)';
+        // Функция для присоединения к Discord
+        function joinDiscord() {
+            window.open('https://discord.gg/hGh7FYteYw', '_blank');
             
-            // Убираем трансформацию через 150ms
+            // Анимация кнопки
+            const button = event.target;
+            button.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 button.style.transform = '';
             }, 150);
             
-            // Создаем эффект пузырька
             createRipple(button);
+        }
+
+        // Функция для показа информации
+        function showInfo() {
+            alert('BSE Team - это сообщество единомышленников, создающих интересные проекты вместе!');
             
-            // Меняем цвет анимированного блока случайным образом
-            changeBoxColor();
+            // Анимация кнопки
+            const button = event.target;
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = '';
+            }, 150);
+            
+            createRipple(button);
+        }
+
+        // Функция для показа проектов
+        function showProjects() {
+            alert('Наши проекты скоро появятся здесь! Следите за обновлениями.');
+            
+            // Анимация кнопки
+            const button = event.target;
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = '';
+            }, 150);
+            
+            createRipple(button);
         }
 
         // Функция для создания ripple-эффекта
@@ -258,28 +431,6 @@
             setTimeout(() => {
                 ripple.remove();
             }, 600);
-        }
-
-        // Функция для изменения цвета анимированного блока
-        function changeBoxColor() {
-            const box = document.getElementById('animatedBox');
-            const blueShades = [
-                'linear-gradient(45deg, #3b82f6, #60a5fa)',
-                'linear-gradient(45deg, #2563eb, #3b82f6)',
-                'linear-gradient(45deg, #1d4ed8, #2563eb)',
-                'linear-gradient(45deg, #1e40af, #1d4ed8)',
-                'linear-gradient(45deg, #3730a3, #1e40af)'
-            ];
-            
-            // Выбираем случайный градиент
-            const randomGradient = blueShades[Math.floor(Math.random() * blueShades.length)];
-            box.style.background = randomGradient;
-            
-            // Добавляем небольшую анимацию изменения
-            box.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                box.style.transform = '';
-            }, 300);
         }
 
         // Добавляем стили для ripple-анимации
