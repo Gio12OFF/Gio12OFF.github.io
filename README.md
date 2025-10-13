@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> BSE Team Present </title>
+    <title>BSE Team Present</title>
     <style>
         * {
             margin: 0;
@@ -128,31 +129,6 @@
             box-shadow: 0 8px 25px rgba(128, 90, 213, 0.6);
         }
 
-        .btn-border {
-            background: transparent;
-            position: relative;
-        }
-
-        .btn-border::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #9f7aea, #d6bcfa, #9f7aea, #d6bcfa);
-            border-radius: 52px;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .btn-border:hover::before {
-            opacity: 1;
-            animation: gradientMove 2s linear infinite;
-            background-size: 400% 400%;
-        }
-
         .floating-elements {
             position: absolute;
             width: 100%;
@@ -207,50 +183,79 @@
             border-radius: 15px;
             padding: 25px;
             margin: 30px auto;
-            max-width: 500px;
+            max-width: 600px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: left;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
         }
 
         .owner-header {
             display: flex;
             align-items: center;
             margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
         }
 
         .owner-avatar {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            margin-right: 15px;
-            border: 2px solid #d6bcfa;
-            box-shadow: 0 0 10px rgba(214, 188, 250, 0.5);
+            margin-right: 20px;
+            border: 3px solid #d6bcfa;
+            box-shadow: 0 0 15px rgba(214, 188, 250, 0.7);
+            z-index: 2;
+            position: relative;
+        }
+
+        .owner-banner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 100%;
+            border-radius: 0 15px 15px 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .banner-gif {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .owner-details {
             flex: 1;
+            z-index: 2;
+            position: relative;
         }
 
         .owner-name {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: bold;
             margin-bottom: 5px;
             background: linear-gradient(to right, #e9d8fd, #d6bcfa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .owner-role {
-            font-size: 1rem;
-            opacity: 0.8;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
         }
 
         .owner-description {
             margin-top: 15px;
             line-height: 1.5;
+            z-index: 2;
+            position: relative;
         }
 
         footer {
@@ -263,12 +268,6 @@
             0% { transform: scale(1) translateY(-3px); }
             50% { transform: scale(1.05) translateY(-3px); }
             100% { transform: scale(1) translateY(-3px); }
-        }
-
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         @keyframes float {
@@ -319,12 +318,26 @@
             }
             
             .owner-avatar {
-                width: 50px;
-                height: 50px;
+                width: 60px;
+                height: 60px;
             }
             
             .owner-name {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
+            }
+            
+            .owner-banner {
+                width: 150px;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
             }
         }
     </style>
@@ -353,24 +366,27 @@
             <div class="buttons-container">
                 <button class="btn btn-discord" onclick="joinDiscord()">Присоединиться к серверу</button>
                 <button class="btn btn-purple" onclick="showInfo()">О нас</button>
-                <button class="btn btn-border" onclick="showProjects()">Наши проекты</button>
             </div>
 
             <div id="ownerInfo" class="owner-info" style="display: none;">
+                <div class="owner-banner">
+                    <img src="https://cdn.discordapp.com/attachments/1363219380703461618/1427298856424574976/0bfe247cdc1c4c28cd048a9106ec20e5.gif?ex=68ee5b25&is=68ed09a5&hm=733d55a067d67b5ece9d8da17f0b1c318eaad9c1c785bfca9aeae333c706f9e8&" alt="Banner" class="banner-gif">
+                </div>
                 <div class="owner-header">
                     <img src="https://cdn.discordapp.com/attachments/1363219380703461618/1427296719468494929/ff20a57a8a3053b148ad6c76b4a6bb57.gif?ex=68ee5927&is=68ed07a7&hm=e4c13a27e5a4e40be2d7ccc0dec883304b2ebf06eb25420b2a3e93026376b995&" alt="g1oof Avatar" class="owner-avatar">
                     <div class="owner-details">
                         <div class="owner-name">g1oof</div>
                         <div class="owner-role">Владелец сервера & Разработчик сайта</div>
+                        <div class="owner-role">Основатель BSE Team</div>
                     </div>
                 </div>
                 <div class="owner-description">
-                    <p>Основатель сообщества BSE Team и создатель этого сайта. Активный разработчик с опытом в создании интерактивных веб-проектов и комьюнити-менеджменте.</p>
+                    <p>Создатель и вдохновитель сообщества BSE Team. Активный разработчик с многолетним опытом в создании интерактивных веб-проектов, игровых модов и комьюнити-менеджменте. Всегда открыт к новым идеям и сотрудничеству!</p>
                 </div>
             </div>
 
             <footer class="fade-in">
-                <p>BSE Team Present | Site developer: g1oof</p>
+                <p>BSE Team Present  | Site developer: g1oof</p>
             </footer>
         </div>
     </div>
@@ -400,20 +416,6 @@
             } else {
                 ownerInfo.style.display = 'none';
             }
-            
-            // Анимация кнопки
-            const button = event.target;
-            button.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                button.style.transform = '';
-            }, 150);
-            
-            createRipple(button);
-        }
-
-        // Функция для показа проектов
-        function showProjects() {
-            alert('Наши проекты скоро появятся здесь! Следите за обновлениями.');
             
             // Анимация кнопки
             const button = event.target;
