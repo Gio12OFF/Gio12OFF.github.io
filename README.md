@@ -1,4 +1,3 @@
-
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -24,6 +23,7 @@
             max-width: 1200px;
             margin: 0 auto;
             text-align: center;
+            position: relative;
         }
 
         header {
@@ -48,11 +48,12 @@
         }
 
         .cube-container {
-            perspective: 1000px;
-            width: 300px;
-            height: 300px;
-            margin: 40px auto;
-            position: relative;
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
         }
 
         .cube {
@@ -60,15 +61,20 @@
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            animation: rotateCube 15s infinite linear;
+            transform: rotateX(-15deg) rotateY(15deg);
+            transition: transform 0.5s ease;
+        }
+
+        .cube:hover {
+            transform: rotateX(-15deg) rotateY(15deg) scale(1.05);
         }
 
         .cube-face {
             position: absolute;
             width: 100%;
             height: 100%;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -77,32 +83,32 @@
         }
 
         .cube-front {
-            transform: translateZ(150px);
+            transform: translateZ(100px);
             background: linear-gradient(45deg, #805ad5, #6b46c1);
         }
 
         .cube-back {
-            transform: rotateY(180deg) translateZ(150px);
+            transform: rotateY(180deg) translateZ(100px);
             background: linear-gradient(45deg, #6b46c1, #553c9a);
         }
 
         .cube-right {
-            transform: rotateY(90deg) translateZ(150px);
+            transform: rotateY(90deg) translateZ(100px);
             background: linear-gradient(45deg, #9f7aea, #805ad5);
         }
 
         .cube-left {
-            transform: rotateY(-90deg) translateZ(150px);
+            transform: rotateY(-90deg) translateZ(100px);
             background: linear-gradient(45deg, #553c9a, #44337a);
         }
 
         .cube-top {
-            transform: rotateX(90deg) translateZ(150px);
+            transform: rotateX(90deg) translateZ(100px);
             background: linear-gradient(45deg, #d6bcfa, #9f7aea);
         }
 
         .cube-bottom {
-            transform: rotateX(-90deg) translateZ(150px);
+            transform: rotateX(-90deg) translateZ(100px);
             background: linear-gradient(45deg, #44337a, #322659);
         }
 
@@ -110,7 +116,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 15px;
+            border-radius: 10px;
+        }
+
+        .content {
+            margin-top: 60px;
         }
 
         .buttons-container {
@@ -238,11 +248,6 @@
             opacity: 0.7;
         }
 
-        @keyframes rotateCube {
-            0% { transform: rotateX(0) rotateY(0); }
-            100% { transform: rotateX(360deg) rotateY(360deg); }
-        }
-
         @keyframes pulse {
             0% { transform: scale(1) translateY(-3px); }
             50% { transform: scale(1.05) translateY(-3px); }
@@ -287,36 +292,38 @@
             }
             
             .cube-container {
-                width: 250px;
-                height: 250px;
-            }
-            
-            .cube-front, .cube-back, .cube-right, .cube-left, .cube-top, .cube-bottom {
-                transform-origin: center;
+                width: 150px;
+                height: 150px;
+                top: 10px;
+                left: 10px;
             }
             
             .cube-front {
-                transform: translateZ(125px);
+                transform: translateZ(75px);
             }
             
             .cube-back {
-                transform: rotateY(180deg) translateZ(125px);
+                transform: rotateY(180deg) translateZ(75px);
             }
             
             .cube-right {
-                transform: rotateY(90deg) translateZ(125px);
+                transform: rotateY(90deg) translateZ(75px);
             }
             
             .cube-left {
-                transform: rotateY(-90deg) translateZ(125px);
+                transform: rotateY(-90deg) translateZ(75px);
             }
             
             .cube-top {
-                transform: rotateX(90deg) translateZ(125px);
+                transform: rotateX(90deg) translateZ(75px);
             }
             
             .cube-bottom {
-                transform: rotateX(-90deg) translateZ(125px);
+                transform: rotateX(-90deg) translateZ(75px);
+            }
+            
+            .content {
+                margin-top: 40px;
             }
         }
     </style>
@@ -330,11 +337,6 @@
     </div>
 
     <div class="container">
-        <header class="fade-in">
-            <h1>BSE Team Present</h1>
-            <p class="subtitle">Добро пожаловать в наше сообщество</p>
-        </header>
-
         <div class="cube-container">
             <div class="cube">
                 <div class="cube-face cube-front">
@@ -348,15 +350,22 @@
             </div>
         </div>
 
-        <div class="buttons-container">
-            <button class="btn btn-discord" onclick="joinDiscord()">Присоединиться к серверу</button>
-            <button class="btn btn-purple" onclick="showInfo()">О нас</button>
-            <button class="btn btn-border" onclick="showProjects()">Наши проекты</button>
-        </div>
+        <div class="content">
+            <header class="fade-in">
+                <h1>BSE Team Present</h1>
+                <p class="subtitle">Добро пожаловать в наше сообщество</p>
+            </header>
 
-        <footer class="fade-in">
-            <p>BSE Team Present</p>
-        </footer>
+            <div class="buttons-container">
+                <button class="btn btn-discord" onclick="joinDiscord()">Присоединиться к серверу</button>
+                <button class="btn btn-purple" onclick="showInfo()">О нас</button>
+                <button class="btn btn-border" onclick="showProjects()">Наши проекты</button>
+            </div>
+
+            <footer class="fade-in">
+                <p>BSE Team Present </p>
+            </footer>
+        </div>
     </div>
 
     <script>
