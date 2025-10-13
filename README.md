@@ -355,7 +355,7 @@
         </div>
 
         <footer class="fade-in">
-            <p>BSE Team Present © 2023</p>
+            <p>BSE Team Present</p>
         </footer>
     </div>
 
