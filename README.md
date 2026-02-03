@@ -1,541 +1,471 @@
-
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSE Team</title>
+    <title>088 - Чёрный фон с цветами</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
-            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
             min-height: 100vh;
-            overflow: hidden;
+            position: relative;
         }
 
-        /* Стили для начального экрана */
-        #welcomeScreen {
+        .background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1e40af, #2563eb, #3b82f6);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .welcome-content {
-            text-align: center;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
-            animation: welcomeFadeIn 1.5s ease-out;
-        }
-
-        .welcome-title {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #bfdbfe, #dbeafe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .welcome-subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
-
-        .welcome-btn {
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            background: linear-gradient(45deg, #2563eb, #3b82f6);
-            color: white;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .welcome-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
-            animation: pulse 1.5s infinite;
-        }
-
-        /* Стили для основного сайта */
-        #mainSite {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header {
-            padding: 40px 0;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            background: linear-gradient(to right, #bfdbfe, #dbeafe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 40px;
-        }
-
-        .cube-container {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 40px;
-        }
-
-        .cube {
-            width: 100%;
-            height: 100%;
-            border-radius: 15px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.4);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: linear-gradient(45deg, #2563eb, #3b82f6);
-        }
-
-        .cube:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 35px rgba(37, 99, 235, 0.6);
-        }
-
-        .cube-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 15px;
-        }
-
-        .buttons-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-            min-width: 200px;
-        }
-
-        .btn-discord {
-            background: linear-gradient(45deg, #2563eb, #3b82f6);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
-        }
-
-        .btn-discord:hover {
-            animation: pulse 1s infinite;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
-        }
-
-        .btn-about {
-            background: linear-gradient(45deg, #1d4ed8, #2563eb);
-            box-shadow: 0 4px 15px rgba(29, 78, 216, 0.4);
-        }
-
-        .btn-about:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(29, 78, 216, 0.6);
-        }
-
-        .owner-info {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 30px auto;
-            max-width: 600px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: left;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            display: none;
-        }
-
-        .owner-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .owner-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-right: 20px;
-            border: 3px solid #bfdbfe;
-            box-shadow: 0 0 15px rgba(191, 219, 254, 0.5);
-        }
-
-        .owner-details {
-            flex: 1;
-        }
-
-        .owner-name {
-            font-size: 1.6rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            background: linear-gradient(to right, #bfdbfe, #dbeafe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .owner-role {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 8px;
-        }
-
-        .owner-description {
-            margin-top: 15px;
-            line-height: 1.5;
-        }
-
-        .floating-elements {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            overflow: hidden;
             z-index: -1;
+            background: radial-gradient(circle at 20% 50%, rgba(40, 0, 60, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(80, 0, 0, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(0, 40, 80, 0.1) 0%, transparent 50%);
         }
 
-        .floating-element {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 15s infinite linear;
-        }
-
-        .floating-element:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 10%;
-            left: 10%;
-            animation-duration: 20s;
-        }
-
-        .floating-element:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            top: 60%;
-            left: 80%;
-            animation-duration: 25s;
-        }
-
-        .floating-element:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            top: 80%;
-            left: 20%;
-            animation-duration: 15s;
-        }
-
-        .floating-element:nth-child(4) {
-            width: 100px;
-            height: 100px;
-            top: 30%;
-            left: 70%;
-            animation-duration: 30s;
-        }
-
-        footer {
-            margin-top: 60px;
-            padding: 20px;
+        .flowers-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
             opacity: 0.7;
         }
 
-        /* Анимации */
-        @keyframes welcomeFadeIn {
-            from {
+        .flower {
+            position: absolute;
+            opacity: 0;
+            animation: flowerAppear 8s infinite;
+        }
+
+        .flower:nth-child(1) {
+            top: 10%;
+            left: 15%;
+            animation-delay: 0s;
+            font-size: 24px;
+            color: #6a0dad;
+        }
+
+        .flower:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: 1s;
+            font-size: 32px;
+            color: #8a2be2;
+        }
+
+        .flower:nth-child(3) {
+            bottom: 15%;
+            left: 20%;
+            animation-delay: 2s;
+            font-size: 28px;
+            color: #9932cc;
+        }
+
+        .flower:nth-child(4) {
+            bottom: 30%;
+            right: 15%;
+            animation-delay: 3s;
+            font-size: 36px;
+            color: #9400d3;
+        }
+
+        .flower:nth-child(5) {
+            top: 40%;
+            left: 10%;
+            animation-delay: 4s;
+            font-size: 20px;
+            color: #ba55d3;
+        }
+
+        .flower:nth-child(6) {
+            top: 60%;
+            right: 20%;
+            animation-delay: 5s;
+            font-size: 40px;
+            color: #da70d6;
+        }
+
+        @keyframes flowerAppear {
+            0%, 100% {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: scale(0.5) rotate(0deg);
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            25% {
+                opacity: 0.8;
+                transform: scale(1) rotate(90deg);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1) rotate(180deg);
+            }
+            75% {
+                opacity: 0.6;
+                transform: scale(1) rotate(270deg);
+            }
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .number-container {
+            position: relative;
+            margin-bottom: 80px;
+        }
+
+        .number-088 {
+            font-size: 15vw;
+            font-weight: 900;
+            color: transparent;
+            background: linear-gradient(45deg, #fff, #aaa, #fff, #aaa);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: numberGlow 4s ease-in-out infinite, pulse 3s infinite;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+            letter-spacing: 5px;
+        }
+
+        @keyframes numberGlow {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
             }
         }
 
         @keyframes pulse {
-            0% { transform: scale(1) translateY(-3px); }
-            50% { transform: scale(1.05) translateY(-3px); }
-            100% { transform: scale(1) translateY(-3px); }
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
         }
 
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
         }
 
-        @keyframes fadeInUp {
-            from {
+        .discord-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: linear-gradient(45deg, #5865F2, #7289DA);
+            color: white;
+            padding: 18px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(88, 101, 242, 0.4);
+            animation: discordFloat 3s ease-in-out infinite;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .discord-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(88, 101, 242, 0.6);
+        }
+
+        @keyframes discordFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .discord-icon {
+            font-size: 2.2rem;
+        }
+
+        .creators-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .creator-card {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            max-width: 280px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            animation: cardAppear 1s ease-out;
+        }
+
+        .creator-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes cardAppear {
+            0% {
                 opacity: 0;
                 transform: translateY(30px);
             }
-            to {
+            100% {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        .fade-in {
-            animation: fadeInUp 0.6s ease-out;
+        .creator-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #b19cd9;
+            font-weight: 600;
+        }
+
+        .creator-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .discord-link-small {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #7289DA;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background-color: rgba(114, 137, 218, 0.1);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .discord-link-small:hover {
+            background-color: rgba(114, 137, 218, 0.2);
+            color: #8ea1e1;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            text-align: center;
         }
 
         @media (max-width: 768px) {
-            .welcome-title {
-                font-size: 2.5rem;
+            .number-088 {
+                font-size: 20vw;
             }
             
-            h1 {
-                font-size: 2.2rem;
+            .discord-link {
+                font-size: 1.5rem;
+                padding: 15px 25px;
             }
             
-            .cube-container {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .owner-avatar {
-                width: 60px;
-                height: 60px;
-            }
-            
-            .owner-name {
-                font-size: 1.3rem;
-            }
-            
-            .buttons-container {
+            .creators-container {
                 flex-direction: column;
                 align-items: center;
             }
             
-            .btn {
-                width: 100%;
-                max-width: 300px;
+            .creator-card {
+                max-width: 90%;
+            }
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: floatParticle 15s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
             }
         }
     </style>
 </head>
 <body>
-    <!-- Начальный экран -->
-    <div id="welcomeScreen">
-        <div class="welcome-content">
-            <h1 class="welcome-title">Welcome to BSE Team</h1>
-            <p class="welcome-subtitle">Присоединяйтесь к нашему сообществу</p>
-            <button class="welcome-btn" onclick="showMainSite()">About Us</button>
-        </div>
+    <div class="background"></div>
+    
+    <div class="flowers-container">
+        <div class="flower">✿</div>
+        <div class="flower">❀</div>
+        <div class="flower">✾</div>
+        <div class="flower">❁</div>
+        <div class="flower">✽</div>
+        <div class="flower">❃</div>
     </div>
-
-    <!-- Основной сайт -->
-    <div id="mainSite">
-        <div class="floating-elements">
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
+    
+    <div class="floating-particles" id="particles"></div>
+    
+    <div class="main-container">
+        <div class="number-container">
+            <div class="number-088">088</div>
         </div>
-
-        <div class="container">
-            <header class="fade-in">
-                <h1>BSE Team</h1>
-                <p class="subtitle">Сообщество разработчиков и энтузиастов</p>
-            </header>
-
-            <div class="cube-container fade-in">
-                <div class="cube">
-                    <img src="https://media.discordapp.net/attachments/1419673724000407674/1427289960335151144/f4d57eaf-234f-4015-b0c2-76ab7c10cf33c.jpg?ex=68ee52dc&is=68ed015c&hm=0512a812ad1879bfb2542d4a36fb87736f7f7d7276ceac059c7e1a512a429fb9&=&format=webp" alt="BSE Team" class="cube-image">
+        
+        <div class="links-container">
+            <a href="https://discord.gg/kFPa2ZcZw5" target="_blank" class="discord-link">
+                <i class="fab fa-discord discord-icon"></i>
+                Discord сервер
+            </a>
+            
+            <div class="creators-container">
+                <div class="creator-card">
+                    <div class="creator-title">Создатель</div>
+                    <div class="creator-name">g1ooff</div>
+                    <a href="https://discord.com/channels/@me/1363219380703461618" target="_blank" class="discord-link-small">
+                        <i class="fab fa-discord"></i> Discord аккаунт
+                    </a>
+                </div>
+                
+                <div class="creator-card">
+                    <div class="creator-title">Со-создатель</div>
+                    <div class="creator-name">lolusaythat_38198</div>
+                    <a href="https://discord.com/channels/@me/1202228863711858769" target="_blank" class="discord-link-small">
+                        <i class="fab fa-discord"></i> Discord аккаунт
+                    </a>
                 </div>
             </div>
-
-            <div class="buttons-container">
-                <button class="btn btn-discord" onclick="joinDiscord()">Присоединиться к серверу</button>
-                <button class="btn btn-about" onclick="showOwnerInfo()">Информация о создателе</button>
-            </div>
-
-            <div id="ownerInfo" class="owner-info fade-in">
-                <div class="owner-header">
-                    <img src="https://cdn.discordapp.com/attachments/1363219380703461618/1427296719468494929/ff20a57a8a3053b148ad6c76b4a6bb57.gif?ex=68ee5927&is=68ed07a7&hm=e4c13a27e5a4e40be2d7ccc0dec883304b2ebf06eb25420b2a3e93026376b995&" alt="g1oof Avatar" class="owner-avatar">
-                    <div class="owner-details">
-                        <div class="owner-name">g1oof</div>
-                        <div class="owner-role">Владелец сервера & Разработчик сайта</div>
-                        <div class="owner-role">Основатель BSE Team</div>
-                    </div>
-                </div>
-                <div class="owner-description">
-                    <p>Создатель и вдохновитель сообщества BSE Team. Активный разработчик интерактивных веб-проектов, ботов, и комьюнити-менеджменте!</p>
-                </div>
-            </div>
-
-            <footer class="fade-in">
-                <p>BSE Team | Site developer: g1oof</p>
-            </footer>
+        </div>
+        
+        <div class="footer">
+            Сайт с анимациями на чёрном фоне с цветами
         </div>
     </div>
 
     <script>
-        // Функция для показа основного сайта
-        function showMainSite() {
-            const welcomeScreen = document.getElementById('welcomeScreen');
-            const mainSite = document.getElementById('mainSite');
+        // Создание плавающих частиц
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particlesCount = 50;
             
-            // Анимация исчезновения начального экрана
-            welcomeScreen.style.opacity = '0';
-            welcomeScreen.style.transform = 'scale(1.1)';
-            
-            setTimeout(() => {
-                welcomeScreen.style.display = 'none';
-                mainSite.style.display = 'block';
+            for (let i = 0; i < particlesCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
                 
-                // Анимация появления основного сайта
-                setTimeout(() => {
-                    mainSite.style.opacity = '1';
-                    
-                    // Анимация появления элементов
-                    const elements = document.querySelectorAll('.fade-in');
-                    elements.forEach((element, index) => {
-                        element.style.animationDelay = `${index * 0.2}s`;
-                    });
-                }, 50);
-            }, 800);
-        }
-
-        // Функция для присоединения к Discord
-        function joinDiscord() {
-            window.open('https://discord.gg/hGh7FYteYw', '_blank');
-            
-            // Анимация кнопки
-            const button = event.target;
-            button.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                button.style.transform = '';
-            }, 150);
-            
-            createRipple(button);
-        }
-
-        // Функция для показа информации о создателе
-        function showOwnerInfo() {
-            const ownerInfo = document.getElementById('ownerInfo');
-            
-            if (ownerInfo.style.display === 'none' || ownerInfo.style.display === '') {
-                ownerInfo.style.display = 'block';
-                ownerInfo.classList.add('fade-in');
-            } else {
-                ownerInfo.style.display = 'none';
+                // Случайные размеры
+                const size = Math.random() * 10 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Случайное положение
+                particle.style.left = `${Math.random() * 100}vw`;
+                
+                // Случайная задержка анимации
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                
+                // Случайная длительность анимации
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                
+                // Случайный цвет
+                const colors = [
+                    'rgba(138, 43, 226, 0.3)',
+                    'rgba(153, 50, 204, 0.3)',
+                    'rgba(186, 85, 211, 0.3)',
+                    'rgba(218, 112, 214, 0.3)'
+                ];
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
             }
-            
-            // Анимация кнопки
-            const button = event.target;
-            button.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                button.style.transform = '';
-            }, 150);
-            
-            createRipple(button);
         }
-
-        // Функция для создания ripple-эффекта
-        function createRipple(button) {
-            const ripple = document.createElement('span');
-            const rect = button.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = event.clientX - rect.left - size / 2;
-            const y = event.clientY - rect.top - size / 2;
+        
+        // Создание дополнительных цветочков
+        function createExtraFlowers() {
+            const flowersContainer = document.querySelector('.flowers-container');
+            const flowerSymbols = ['❀', '✿', '❁', '✾', '✽', '❃', '🌸', '🌺', '🌼'];
             
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            ripple.classList.add('ripple');
-            
-            // Стили для ripple-эффекта
-            ripple.style.position = 'absolute';
-            ripple.style.borderRadius = '50%';
-            ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
-            ripple.style.transform = 'scale(0)';
-            ripple.style.animation = 'ripple-animation 0.6s linear';
-            ripple.style.pointerEvents = 'none';
-            
-            button.style.position = 'relative';
-            button.style.overflow = 'hidden';
-            button.appendChild(ripple);
-            
-            // Удаляем ripple после анимации
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        }
-
-        // Добавляем стили для ripple-анимации
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple-animation {
-                from {
-                    transform: scale(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
+            for (let i = 0; i < 12; i++) {
+                const flower = document.createElement('div');
+                flower.classList.add('flower');
+                
+                // Случайный символ цветка
+                flower.textContent = flowerSymbols[Math.floor(Math.random() * flowerSymbols.length)];
+                
+                // Случайное положение
+                flower.style.top = `${Math.random() * 100}%`;
+                flower.style.left = `${Math.random() * 100}%`;
+                
+                // Случайный размер
+                const size = Math.random() * 30 + 15;
+                flower.style.fontSize = `${size}px`;
+                
+                // Случайный цвет
+                const colors = ['#6a0dad', '#8a2be2', '#9932cc', '#9400d3', '#ba55d3', '#da70d6'];
+                flower.style.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Случайная задержка анимации
+                flower.style.animationDelay = `${Math.random() * 8}s`;
+                
+                // Случайная длительность анимации
+                flower.style.animationDuration = `${Math.random() * 5 + 6}s`;
+                
+                flowersContainer.appendChild(flower);
             }
-        `;
-        document.head.appendChild(style);
+        }
+        
+        // Инициализация после загрузки страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            createExtraFlowers();
+            
+            // Добавляем эффект мерцания для числа 088
+            const numberElement = document.querySelector('.number-088');
+            setInterval(() => {
+                numberElement.style.textShadow = `0 0 ${20 + Math.random() * 30}px rgba(255, 255, 255, ${0.5 + Math.random() * 0.5})`;
+            }, 1000);
+        });
     </script>
 </body>
 </html>
