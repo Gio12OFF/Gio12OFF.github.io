@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gio's Documents</title>
+    <title>Gio's Documents | Anonymous Archive</title>
     <style>
         * {
             margin: 0;
@@ -12,17 +12,13 @@
         }
 
         body {
-            background-color: #050505;
+            background-color: #030303;
             color: #0f0;
             font-family: 'Courier New', 'Monaco', 'Fira Code', monospace;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
         }
 
-        /* Анимированный шумный фон (эффект старого терминала) */
+        /* Эффект старого терминала */
         body::before {
             content: "";
             position: fixed;
@@ -32,8 +28,8 @@
             height: 100%;
             background: repeating-linear-gradient(
                 0deg,
-                rgba(0, 255, 0, 0.03) 0px,
-                rgba(0, 255, 0, 0.03) 2px,
+                rgba(0, 255, 0, 0.02) 0px,
+                rgba(0, 255, 0, 0.02) 2px,
                 transparent 2px,
                 transparent 6px
             );
@@ -41,173 +37,305 @@
             z-index: 1;
         }
 
-        .container {
-            text-align: center;
-            padding: 2rem;
-            max-width: 800px;
-            width: 90%;
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            position: relative;
             z-index: 2;
-            border: 1px solid #0f0;
-            border-radius: 8px;
-            background-color: rgba(0, 0, 0, 0.85);
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
-            backdrop-filter: blur(2px);
         }
 
-        /* SVG маска Anonymous */
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-bottom: 2px solid #0f0;
+            margin-bottom: 2rem;
+        }
+
         .anonymous-symbol {
-            width: 180px;
-            height: auto;
-            margin: 0 auto 1.5rem;
-            filter: drop-shadow(0 0 8px #0f0);
-            transition: transform 0.3s ease;
-        }
-
-        .anonymous-symbol:hover {
-            transform: scale(1.02);
+            width: 100px;
+            margin: 0 auto 1rem;
         }
 
         .anonymous-symbol svg {
             width: 100%;
-            height: auto;
+            filter: drop-shadow(0 0 5px #0f0);
         }
 
         h1 {
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             letter-spacing: 4px;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            font-weight: normal;
+            margin-bottom: 0.5rem;
+            word-break: keep-all;
+        }
+
+        .sub {
+            color: #4a9e4a;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: rgba(0, 30, 0, 0.7);
+            border-left: 3px solid #0f0;
             border-right: 3px solid #0f0;
-            display: inline-block;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: blinkCursor 0.75s step-end infinite;
-            padding-right: 8px;
-        }
-
-        @keyframes blinkCursor {
-            0%, 100% { border-color: #0f0; }
-            50% { border-color: transparent; }
-        }
-
-        .status {
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-            color: #8bc34a;
-            background: rgba(0, 20, 0, 0.6);
-            display: inline-block;
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            border-left: 2px solid #0f0;
-            border-right: 2px solid #0f0;
-        }
-
-        .login-panel {
-            background: #0a0f0a;
-            border: 1px solid #2a5a2a;
-            border-radius: 12px;
-            padding: 2rem;
+            padding: 0.3rem 1.2rem;
+            font-size: 0.7rem;
             margin-top: 1rem;
-            text-align: left;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
         }
 
-        .login-panel h2 {
-            font-size: 1.4rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
+        /* Панель управления (видна только создателю) */
+        .admin-panel {
+            background: #0a100a;
+            border: 1px solid #2a5a2a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-panel h3 {
+            margin-bottom: 1rem;
             color: #0f0;
-            font-weight: normal;
-            letter-spacing: 2px;
+            border-left: 3px solid #0f0;
+            padding-left: 0.8rem;
         }
 
-        .input-group {
-            margin-bottom: 1.2rem;
+        .form-group {
+            margin-bottom: 1rem;
         }
 
-        .input-group label {
+        .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #8bc34a;
         }
 
-        .input-group input {
+        .form-group input,
+        .form-group textarea {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.7rem;
             background: #000;
             border: 1px solid #2a5a2a;
             color: #0f0;
             font-family: monospace;
-            font-size: 1rem;
             border-radius: 4px;
-            outline: none;
-            transition: all 0.2s;
         }
 
-        .input-group input:focus {
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
             border-color: #0f0;
-            box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
         }
 
         .btn {
-            width: 100%;
-            padding: 0.8rem;
             background: #0f0;
             color: #000;
             border: none;
+            padding: 0.7rem 1.5rem;
             font-family: monospace;
-            font-size: 1.1rem;
             font-weight: bold;
-            letter-spacing: 1px;
             cursor: pointer;
-            margin-top: 0.5rem;
             border-radius: 4px;
-            transition: all 0.2s;
+            font-size: 0.9rem;
         }
 
         .btn:hover {
             background: #2ecc2e;
-            box-shadow: 0 0 12px #0f0;
+            box-shadow: 0 0 8px #0f0;
         }
 
-        .info-message {
-            margin-top: 1.2rem;
+        .btn-danger {
+            background: #3a1a1a;
+            color: #f66;
+            border: 1px solid #a00;
+        }
+
+        .btn-danger:hover {
+            background: #5a2a2a;
+        }
+
+        /* Секция с документами */
+        .documents-section {
+            margin-top: 2rem;
+        }
+
+        .documents-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #2a5a2a;
+            padding-bottom: 0.5rem;
+        }
+
+        .doc-count {
             font-size: 0.8rem;
-            text-align: center;
-            color: #6a6;
-            border-top: 1px solid #1a3a1a;
-            padding-top: 1rem;
+            color: #4a9e4a;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .doc-card {
+            background: #0a0f0a;
+            border: 1px solid #2a5a2a;
+            border-radius: 8px;
+            padding: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .doc-card:hover {
+            border-color: #0f0;
+            box-shadow: 0 0 12px rgba(0, 255, 0, 0.1);
+        }
+
+        .doc-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            color: #0f0;
+            word-break: break-word;
+            border-left: 2px solid #0f0;
+            padding-left: 0.6rem;
+        }
+
+        .doc-date {
+            font-size: 0.7rem;
+            color: #5a8a5a;
+            margin-bottom: 0.8rem;
+        }
+
+        .doc-content {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            word-break: break-word;
+            margin-bottom: 1rem;
+        }
+
+        .doc-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .doc-images img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 4px;
+            border: 1px solid #2a5a2a;
+            cursor: pointer;
+        }
+
+        .delete-doc {
+            background: none;
+            border: 1px solid #5a2a2a;
+            color: #f66;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            border-radius: 3px;
+        }
+
+        .delete-doc:hover {
+            background: #2a1a1a;
+        }
+
+        .login-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0a0f0a;
+            border: 1px solid #0f0;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-family: monospace;
+            font-size: 0.8rem;
+            z-index: 100;
+        }
+
+        .login-btn:hover {
+            background: #1a2a1a;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #0a100a;
+            border: 2px solid #0f0;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            border-radius: 8px;
+        }
+
+        .close-modal {
+            float: right;
+            cursor: pointer;
+            font-size: 1.5rem;
         }
 
         .footer {
-            margin-top: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            border-top: 1px solid #1a3a1a;
             font-size: 0.7rem;
             color: #2a5a2a;
         }
 
-        /* Адаптивность */
-        @media (max-width: 600px) {
-            .container {
-                width: 95%;
-                padding: 1.5rem;
+        @media (max-width: 700px) {
+            .wrapper {
+                padding: 1rem;
             }
             h1 {
-                font-size: 1.8rem;
-                white-space: normal;
-                border-right: none;
-                animation: none;
+                font-size: 1.5rem;
             }
-            .anonymous-symbol {
-                width: 120px;
+            .doc-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Символ Anonymous (SVG маска) -->
+
+<div class="wrapper">
+    <div class="header">
         <div class="anonymous-symbol">
             <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M50 10 L70 25 L70 45 L65 55 L50 65 L35 55 L30 45 L30 25 L50 10Z" fill="none" stroke="#0f0" stroke-width="2.5"/>
@@ -219,57 +347,290 @@
                 <text x="50" y="88" font-size="8" text-anchor="middle" fill="#0f0" font-family="monospace">ANONYMOUS</text>
             </svg>
         </div>
+        <h1>GIO'S DOCUMENTS</h1>
+        <div class="sub">◆ encrypted archive ◆ read-only for public ◆</div>
+        <div class="status-badge">⚡ OPEN DATABASE ⚡</div>
+    </div>
 
-        <h1>Gio's Documents</h1>
-        <div class="status">◆ SECURE TERMINAL ◆ AUTHORIZED ACCESS ONLY ◆</div>
+    <!-- Панель администратора (видна только после входа) -->
+    <div id="adminPanel" class="admin-panel">
+        <h3>> ADMIN: CREATE NEW DOCUMENT</h3>
+        <form id="createDocForm">
+            <div class="form-group">
+                <label>TITLE / ЗАГОЛОВОК</label>
+                <input type="text" id="docTitle" required placeholder="Document title...">
+            </div>
+            <div class="form-group">
+                <label>CONTENT / СОДЕРЖАНИЕ</label>
+                <textarea id="docContent" placeholder="Your text here..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>IMAGES (URLs, one per line)</label>
+                <textarea id="docImages" placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.png" rows="3"></textarea>
+                <small style="color:#5a8a5a;">Paste direct image links, one per line</small>
+            </div>
+            <button type="submit" class="btn">+ PUBLISH DOCUMENT</button>
+            <button type="button" id="logoutBtn" class="btn btn-danger" style="margin-left: 0.5rem;">EXIT ADMIN</button>
+        </form>
+    </div>
 
-        <!-- Панель входа (только для создателя) -->
-        <div class="login-panel">
-            <h2>> AUTHENTICATION REQUIRED_</h2>
-            <form id="loginForm">
-                <div class="input-group">
-                    <label>USERNAME</label>
-                    <input type="text" id="username" placeholder="creator" autocomplete="off">
-                </div>
-                <div class="input-group">
-                    <label>ACCESS KEY</label>
-                    <input type="password" id="password" placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn">[ ENTER ]</button>
-                <div class="info-message">
-                    ⚡ Only creator has administrative privileges.<br>
-                    All documents are encrypted and secured.
-                </div>
-            </form>
+    <!-- Список документов -->
+    <div class="documents-section">
+        <div class="documents-header">
+            <h3>> DOCUMENTS_</h3>
+            <span class="doc-count" id="docCount">0 documents</span>
         </div>
-        <div class="footer">
-            Gio's Documents v1.0 | Black/Green Protocol | Anonymous Archive
+        <div id="docGrid" class="doc-grid">
+            <!-- Документы будут загружены сюда -->
+            <div style="text-align:center; padding:2rem; color:#2a5a2a;">Loading archive...</div>
         </div>
     </div>
 
-    <script>
-        // Простая демонстрация авторизации (для примера)
-        // В реальном проекте данные должны проверяться на сервере
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // Заглушка: логин и пароль для демонстрации
-            // В реальной реализации это должно быть серверное API
-            if (username === 'Gio' && password === 'Anonymous2024') {
-                // Перенаправление на панель управления (админку)
-                window.location.href = '/admin/dashboard.html';
-                // В демо-версии показываем alert, т.к. страницы админки ещё нет
-                alert('Авторизация успешна! Переход в панель управления.\n(В реальном проекте здесь будет страница управления документами)');
-            } else {
-                alert('ДОСТУП ЗАПРЕЩЁН\nНеверные учётные данные.');
-                document.getElementById('username').value = '';
-                document.getElementById('password').value = '';
-                document.getElementById('username').focus();
+    <div class="footer">
+        Gio's Documents | Anonymous Archive v2.0 | All data stored locally in your browser
+    </div>
+</div>
+
+<!-- Кнопка входа для создателя -->
+<button id="showLoginBtn" class="login-btn">[ ADMIN LOGIN ]</button>
+
+<!-- Модальное окно входа -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span id="closeModal" class="close-modal" style="float:right; cursor:pointer;">&times;</span>
+        <h3 style="margin-bottom:1rem;">>> AUTHORIZATION</h3>
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label>USERNAME</label>
+                <input type="text" id="adminUser" placeholder="creator">
+            </div>
+            <div class="form-group">
+                <label>PASSWORD</label>
+                <input type="password" id="adminPass" placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn">UNLOCK ADMIN</button>
+        </form>
+        <p style="margin-top:1rem; font-size:0.7rem; color:#5a8a5a;">Only Gio can publish documents.</p>
+    </div>
+</div>
+
+<script>
+    // Конфигурация
+    const STORAGE_KEY = 'gios_documents';
+    const ADMIN_USER = 'Gio';
+    const ADMIN_PASS = 'Anon2024Docs';
+
+    let documents = [];
+    let isAdmin = false;
+
+    // Загрузка документов из localStorage
+    function loadDocuments() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            documents = JSON.parse(stored);
+        } else {
+            // Демо-документ для примера
+            documents = [
+                {
+                    id: Date.now(),
+                    title: "Welcome to Gio's Documents",
+                    content: "This is the first document in the archive.\nAny visitor can read documents.\nOnly Gio can create new ones.\n\nUse the admin login button to access the publishing panel.",
+                    images: [],
+                    date: new Date().toISOString()
+                }
+            ];
+            saveDocuments();
+        }
+        renderDocuments();
+    }
+
+    function saveDocuments() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(documents));
+    }
+
+    function renderDocuments() {
+        const grid = document.getElementById('docGrid');
+        const countSpan = document.getElementById('docCount');
+        
+        if (!documents.length) {
+            grid.innerHTML = '<div style="text-align:center; padding:2rem; color:#2a5a2a;">[ NO DOCUMENTS YET ]</div>';
+            countSpan.innerText = '0 documents';
+            return;
+        }
+
+        countSpan.innerText = documents.length + ' document' + (documents.length !== 1 ? 's' : '');
+        
+        grid.innerHTML = documents.map(doc => {
+            let imagesHtml = '';
+            if (doc.images && doc.images.length) {
+                imagesHtml = `<div class="doc-images">${doc.images.map(img => 
+                    `<img src="${escapeHtml(img)}" alt="image" onclick="window.open('${escapeHtml(img)}', '_blank')">`
+                ).join('')}</div>`;
             }
+            
+            const deleteBtn = isAdmin ? 
+                `<button class="delete-doc" onclick="deleteDocument('${doc.id}')">[ DELETE ]</button>` : '';
+            
+            return `
+                <div class="doc-card">
+                    <div class="doc-title">> ${escapeHtml(doc.title)}</div>
+                    <div class="doc-date">${new Date(doc.date).toLocaleString()}</div>
+                    <div class="doc-content">${escapeHtml(doc.content).replace(/\n/g, '<br>')}</div>
+                    ${imagesHtml}
+                    ${deleteBtn}
+                </div>
+            `;
+        }).join('');
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
         });
-    </script>
+    }
+
+    // Создание нового документа
+    function createDocument(title, content, imagesArray) {
+        const newDoc = {
+            id: Date.now(),
+            title: title.trim(),
+            content: content.trim(),
+            images: imagesArray.filter(url => url.trim() !== ''),
+            date: new Date().toISOString()
+        };
+        documents.unshift(newDoc);
+        saveDocuments();
+        renderDocuments();
+    }
+
+    function deleteDocument(id) {
+        if (!isAdmin) return;
+        if (confirm('Delete this document permanently?')) {
+            documents = documents.filter(doc => doc.id != id);
+            saveDocuments();
+            renderDocuments();
+        }
+    }
+
+    // Админ-панель
+    function showAdminPanel(show) {
+        const panel = document.getElementById('adminPanel');
+        if (show && isAdmin) {
+            panel.classList.add('active');
+        } else {
+            panel.classList.remove('active');
+        }
+    }
+
+    function updateAdminUI() {
+        showAdminPanel(isAdmin);
+        const loginBtn = document.getElementById('showLoginBtn');
+        if (isAdmin) {
+            loginBtn.style.opacity = '0.5';
+            loginBtn.innerText = '[ ADMIN MODE ACTIVE ]';
+        } else {
+            loginBtn.style.opacity = '1';
+            loginBtn.innerText = '[ ADMIN LOGIN ]';
+        }
+        renderDocuments(); // перерендер для кнопок удаления
+    }
+
+    // Вход
+    function adminLogin(username, password) {
+        if (username === ADMIN_USER && password === ADMIN_PASS) {
+            isAdmin = true;
+            localStorage.setItem('gios_admin_session', 'true');
+            document.getElementById('loginModal').classList.remove('active');
+            updateAdminUI();
+            return true;
+        } else {
+            alert('ACCESS DENIED\nInvalid credentials.');
+            return false;
+        }
+    }
+
+    function adminLogout() {
+        isAdmin = false;
+        localStorage.removeItem('gios_admin_session');
+        updateAdminUI();
+    }
+
+    function checkSession() {
+        const session = localStorage.getItem('gios_admin_session');
+        if (session === 'true') {
+            isAdmin = true;
+            updateAdminUI();
+        }
+    }
+
+    // Обработчики
+    document.getElementById('createDocForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (!isAdmin) {
+            alert('Unauthorized. Please login as admin.');
+            return;
+        }
+        
+        const title = document.getElementById('docTitle').value;
+        const content = document.getElementById('docContent').value;
+        const imagesRaw = document.getElementById('docImages').value;
+        
+        if (!title) {
+            alert('Title is required');
+            return;
+        }
+        
+        const imagesArray = imagesRaw.split('\n').filter(line => line.trim() !== '');
+        
+        createDocument(title, content, imagesArray);
+        
+        // Очистка формы
+        document.getElementById('docTitle').value = '';
+        document.getElementById('docContent').value = '';
+        document.getElementById('docImages').value = '';
+        
+        alert('Document published successfully.');
+    });
+    
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        adminLogout();
+    });
+    
+    document.getElementById('showLoginBtn').addEventListener('click', function() {
+        if (isAdmin) {
+            adminLogout();
+        } else {
+            document.getElementById('loginModal').classList.add('active');
+        }
+    });
+    
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('loginModal').classList.remove('active');
+    });
+    
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('adminUser').value;
+        const password = document.getElementById('adminPass').value;
+        adminLogin(username, password);
+        document.getElementById('adminUser').value = '';
+        document.getElementById('adminPass').value = '';
+    });
+    
+    window.onclick = function(event) {
+        const modal = document.getElementById('loginModal');
+        if (event.target === modal) {
+            modal.classList.remove('active');
+        }
+    };
+    
+    // Инициализация
+    loadDocuments();
+    checkSession();
+</script>
 </body>
 </html>
