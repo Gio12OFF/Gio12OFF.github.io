@@ -417,7 +417,7 @@
     const demoDocument = {
         id: 1742688000000,
         title: "PERSONNEL FILE #A-7742 [CLASSIFIED]",
-        content: "=== CONFIDENTIAL ===\n\nФИО: Бабкин Лев Ярославович\nДата рождения: 11.07.201x\nАдрес:Страна: Россия, Г.Киров, Мкр.Нововятск\nТелефон: +79513474196\nТелефон (Родителя.): +79536779004\nTelegram: @vjH3oJ3v\n\n=== РОДИТЕЛИ ===\nОтец: Алексей Бабкин\nМать:Елена Бабкина\n\n=== ПРИМЕЧАНИЕ ===\nДанный документ создан Gio.\n.\n\n.\n",
+        content: "=== CONFIDENTIAL ===\n\nФИО: Бабкин Лев Ярославович\nДата рождения: 11.07.201x\nАдрес:Страна: Россия, Г.Киров, Мкр.Нововятск\nТелефон: +79513474196\nТелефон (Родителя.): +79536779004\nTelegram: @vjH3oJ3v\n\n=== РОДИТЕЛИ ===\nОтец: Алексей Бабкин\nМать:Елена Бабкина\n\n=== ПРИМЕЧАНИЕ ===\nДанный документ создан Gio.\n Фото(-ки)\nhttps://ibb.co/Jj5zV6Q4 , https://ibb.co/1Y3pXCqM , https://ibb.co/TMPYDHxB , https://ibb.co/4nkxJy4n \n Made by GIO\n",
         images: [
             "https://ibb.co/4nkxJy4n",
             "https://ibb.co/TMPYDHxB",
