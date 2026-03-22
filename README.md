@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>088 - Чёрный фон с цветами</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Gio's Documents</title>
     <style>
         * {
             margin: 0;
@@ -13,458 +12,263 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #000;
-            color: #fff;
-            overflow-x: hidden;
+            background-color: #050505;
+            color: #0f0;
+            font-family: 'Courier New', 'Monaco', 'Fira Code', monospace;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: relative;
         }
 
-        .background {
+        /* Анимированный шумный фон (эффект старого терминала) */
+        body::before {
+            content: "";
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at 20% 50%, rgba(40, 0, 60, 0.2) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(80, 0, 0, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 80%, rgba(0, 40, 80, 0.1) 0%, transparent 50%);
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 0, 0.03) 0px,
+                rgba(0, 255, 0, 0.03) 2px,
+                transparent 2px,
+                transparent 6px
+            );
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .flowers-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.7;
-        }
-
-        .flower {
-            position: absolute;
-            opacity: 0;
-            animation: flowerAppear 8s infinite;
-        }
-
-        .flower:nth-child(1) {
-            top: 10%;
-            left: 15%;
-            animation-delay: 0s;
-            font-size: 24px;
-            color: #6a0dad;
-        }
-
-        .flower:nth-child(2) {
-            top: 20%;
-            right: 10%;
-            animation-delay: 1s;
-            font-size: 32px;
-            color: #8a2be2;
-        }
-
-        .flower:nth-child(3) {
-            bottom: 15%;
-            left: 20%;
-            animation-delay: 2s;
-            font-size: 28px;
-            color: #9932cc;
-        }
-
-        .flower:nth-child(4) {
-            bottom: 30%;
-            right: 15%;
-            animation-delay: 3s;
-            font-size: 36px;
-            color: #9400d3;
-        }
-
-        .flower:nth-child(5) {
-            top: 40%;
-            left: 10%;
-            animation-delay: 4s;
-            font-size: 20px;
-            color: #ba55d3;
-        }
-
-        .flower:nth-child(6) {
-            top: 60%;
-            right: 20%;
-            animation-delay: 5s;
-            font-size: 40px;
-            color: #da70d6;
-        }
-
-        @keyframes flowerAppear {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0.5) rotate(0deg);
-            }
-            25% {
-                opacity: 0.8;
-                transform: scale(1) rotate(90deg);
-            }
-            50% {
-                opacity: 0.8;
-                transform: scale(1.1) rotate(180deg);
-            }
-            75% {
-                opacity: 0.6;
-                transform: scale(1) rotate(270deg);
-            }
-        }
-
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
+        .container {
             text-align: center;
-        }
-
-        .number-container {
-            position: relative;
-            margin-bottom: 80px;
-        }
-
-        .number-088 {
-            font-size: 15vw;
-            font-weight: 900;
-            color: transparent;
-            background: linear-gradient(45deg, #fff, #aaa, #fff, #aaa);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: numberGlow 4s ease-in-out infinite, pulse 3s infinite;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
-            letter-spacing: 5px;
-        }
-
-        @keyframes numberGlow {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        .links-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-            width: 100%;
-            max-width: 600px;
-            margin-top: 20px;
-        }
-
-        .discord-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            background: linear-gradient(45deg, #5865F2, #7289DA);
-            color: white;
-            padding: 18px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1.8rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(88, 101, 242, 0.4);
-            animation: discordFloat 3s ease-in-out infinite;
-            width: 100%;
-            max-width: 350px;
-        }
-
-        .discord-link:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(88, 101, 242, 0.6);
-        }
-
-        @keyframes discordFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .discord-icon {
-            font-size: 2.2rem;
-        }
-
-        .creators-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .creator-card {
-            background: rgba(30, 30, 30, 0.8);
-            border-radius: 15px;
-            padding: 25px;
-            width: 100%;
-            max-width: 280px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            animation: cardAppear 1s ease-out;
-        }
-
-        .creator-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        @keyframes cardAppear {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .creator-title {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: #b19cd9;
-            font-weight: 600;
-        }
-
-        .creator-name {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .discord-link-small {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #7289DA;
-            text-decoration: none;
-            padding: 10px 15px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 90%;
+            z-index: 2;
+            border: 1px solid #0f0;
             border-radius: 8px;
-            background-color: rgba(114, 137, 218, 0.1);
-            transition: all 0.3s ease;
-            font-size: 1rem;
+            background-color: rgba(0, 0, 0, 0.85);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+            backdrop-filter: blur(2px);
         }
 
-        .discord-link-small:hover {
-            background-color: rgba(114, 137, 218, 0.2);
-            color: #8ea1e1;
+        /* SVG маска Anonymous */
+        .anonymous-symbol {
+            width: 180px;
+            height: auto;
+            margin: 0 auto 1.5rem;
+            filter: drop-shadow(0 0 8px #0f0);
+            transition: transform 0.3s ease;
+        }
+
+        .anonymous-symbol:hover {
+            transform: scale(1.02);
+        }
+
+        .anonymous-symbol svg {
+            width: 100%;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            letter-spacing: 4px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            font-weight: normal;
+            border-right: 3px solid #0f0;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blinkCursor 0.75s step-end infinite;
+            padding-right: 8px;
+        }
+
+        @keyframes blinkCursor {
+            0%, 100% { border-color: #0f0; }
+            50% { border-color: transparent; }
+        }
+
+        .status {
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: #8bc34a;
+            background: rgba(0, 20, 0, 0.6);
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            border-left: 2px solid #0f0;
+            border-right: 2px solid #0f0;
+        }
+
+        .login-panel {
+            background: #0a0f0a;
+            border: 1px solid #2a5a2a;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 1rem;
+            text-align: left;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-panel h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #0f0;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #8bc34a;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background: #000;
+            border: 1px solid #2a5a2a;
+            color: #0f0;
+            font-family: monospace;
+            font-size: 1rem;
+            border-radius: 4px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #0f0;
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: #0f0;
+            color: #000;
+            border: none;
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: #2ecc2e;
+            box-shadow: 0 0 12px #0f0;
+        }
+
+        .info-message {
+            margin-top: 1.2rem;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #6a6;
+            border-top: 1px solid #1a3a1a;
+            padding-top: 1rem;
         }
 
         .footer {
-            margin-top: 60px;
-            padding: 20px;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
-            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #2a5a2a;
         }
 
-        @media (max-width: 768px) {
-            .number-088 {
-                font-size: 20vw;
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 1.5rem;
             }
-            
-            .discord-link {
-                font-size: 1.5rem;
-                padding: 15px 25px;
+            h1 {
+                font-size: 1.8rem;
+                white-space: normal;
+                border-right: none;
+                animation: none;
             }
-            
-            .creators-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .creator-card {
-                max-width: 90%;
-            }
-        }
-
-        .floating-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: floatParticle 15s infinite linear;
-        }
-
-        @keyframes floatParticle {
-            0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
-            }
-            100% {
-                transform: translateY(-100px) translateX(100px) rotate(360deg);
+            .anonymous-symbol {
+                width: 120px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="background"></div>
-    
-    <div class="flowers-container">
-        <div class="flower">✿</div>
-        <div class="flower">❀</div>
-        <div class="flower">✾</div>
-        <div class="flower">❁</div>
-        <div class="flower">✽</div>
-        <div class="flower">❃</div>
-    </div>
-    
-    <div class="floating-particles" id="particles"></div>
-    
-    <div class="main-container">
-        <div class="number-container">
-            <div class="number-088">088</div>
+    <div class="container">
+        <!-- Символ Anonymous (SVG маска) -->
+        <div class="anonymous-symbol">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 10 L70 25 L70 45 L65 55 L50 65 L35 55 L30 45 L30 25 L50 10Z" fill="none" stroke="#0f0" stroke-width="2.5"/>
+                <circle cx="38" cy="38" r="3" fill="#0f0"/>
+                <circle cx="62" cy="38" r="3" fill="#0f0"/>
+                <path d="M44 48 L56 48" stroke="#0f0" stroke-width="2" stroke-linecap="round"/>
+                <path d="M50 52 L50 62" stroke="#0f0" stroke-width="2"/>
+                <path d="M30 70 L70 70" stroke="#0f0" stroke-width="2" stroke-dasharray="3 3"/>
+                <text x="50" y="88" font-size="8" text-anchor="middle" fill="#0f0" font-family="monospace">ANONYMOUS</text>
+            </svg>
         </div>
-        
-        <div class="links-container">
-            <a href="https://discord.gg/kFPa2ZcZw5" target="_blank" class="discord-link">
-                <i class="fab fa-discord discord-icon"></i>
-                Discord сервер
-            </a>
-            
-            <div class="creators-container">
-                <div class="creator-card">
-                    <div class="creator-title">Создатель</div>
-                    <div class="creator-name">g1ooff</div>
-                    <a href="https://discord.com/channels/@me/1363219380703461618" target="_blank" class="discord-link-small">
-                        <i class="fab fa-discord"></i> Discord аккаунт
-                    </a>
+
+        <h1>Gio's Documents</h1>
+        <div class="status">◆ SECURE TERMINAL ◆ AUTHORIZED ACCESS ONLY ◆</div>
+
+        <!-- Панель входа (только для создателя) -->
+        <div class="login-panel">
+            <h2>> AUTHENTICATION REQUIRED_</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>USERNAME</label>
+                    <input type="text" id="username" placeholder="creator" autocomplete="off">
                 </div>
-                
-                <div class="creator-card">
-                    <div class="creator-title">Со-создатель</div>
-                    <div class="creator-name">lolusaythat_38198</div>
-                    <a href="https://discord.com/channels/@me/1202228863711858769" target="_blank" class="discord-link-small">
-                        <i class="fab fa-discord"></i> Discord аккаунт
-                    </a>
+                <div class="input-group">
+                    <label>ACCESS KEY</label>
+                    <input type="password" id="password" placeholder="••••••••">
                 </div>
-            </div>
+                <button type="submit" class="btn">[ ENTER ]</button>
+                <div class="info-message">
+                    ⚡ Only creator has administrative privileges.<br>
+                    All documents are encrypted and secured.
+                </div>
+            </form>
         </div>
-        
         <div class="footer">
-            Сайт с анимациями на чёрном фоне с цветами
+            Gio's Documents v1.0 | Black/Green Protocol | Anonymous Archive
         </div>
     </div>
 
     <script>
-        // Создание плавающих частиц
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particlesCount = 50;
+        // Простая демонстрация авторизации (для примера)
+        // В реальном проекте данные должны проверяться на сервере
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            for (let i = 0; i < particlesCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Случайные размеры
-                const size = Math.random() * 10 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Случайное положение
-                particle.style.left = `${Math.random() * 100}vw`;
-                
-                // Случайная задержка анимации
-                particle.style.animationDelay = `${Math.random() * 15}s`;
-                
-                // Случайная длительность анимации
-                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
-                
-                // Случайный цвет
-                const colors = [
-                    'rgba(138, 43, 226, 0.3)',
-                    'rgba(153, 50, 204, 0.3)',
-                    'rgba(186, 85, 211, 0.3)',
-                    'rgba(218, 112, 214, 0.3)'
-                ];
-                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                
-                particlesContainer.appendChild(particle);
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Заглушка: логин и пароль для демонстрации
+            // В реальной реализации это должно быть серверное API
+            if (username === 'Gio' && password === 'Anonymous2024') {
+                // Перенаправление на панель управления (админку)
+                window.location.href = '/admin/dashboard.html';
+                // В демо-версии показываем alert, т.к. страницы админки ещё нет
+                alert('Авторизация успешна! Переход в панель управления.\n(В реальном проекте здесь будет страница управления документами)');
+            } else {
+                alert('ДОСТУП ЗАПРЕЩЁН\nНеверные учётные данные.');
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('username').focus();
             }
-        }
-        
-        // Создание дополнительных цветочков
-        function createExtraFlowers() {
-            const flowersContainer = document.querySelector('.flowers-container');
-            const flowerSymbols = ['❀', '✿', '❁', '✾', '✽', '❃', '🌸', '🌺', '🌼'];
-            
-            for (let i = 0; i < 12; i++) {
-                const flower = document.createElement('div');
-                flower.classList.add('flower');
-                
-                // Случайный символ цветка
-                flower.textContent = flowerSymbols[Math.floor(Math.random() * flowerSymbols.length)];
-                
-                // Случайное положение
-                flower.style.top = `${Math.random() * 100}%`;
-                flower.style.left = `${Math.random() * 100}%`;
-                
-                // Случайный размер
-                const size = Math.random() * 30 + 15;
-                flower.style.fontSize = `${size}px`;
-                
-                // Случайный цвет
-                const colors = ['#6a0dad', '#8a2be2', '#9932cc', '#9400d3', '#ba55d3', '#da70d6'];
-                flower.style.color = colors[Math.floor(Math.random() * colors.length)];
-                
-                // Случайная задержка анимации
-                flower.style.animationDelay = `${Math.random() * 8}s`;
-                
-                // Случайная длительность анимации
-                flower.style.animationDuration = `${Math.random() * 5 + 6}s`;
-                
-                flowersContainer.appendChild(flower);
-            }
-        }
-        
-        // Инициализация после загрузки страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            createExtraFlowers();
-            
-            // Добавляем эффект мерцания для числа 088
-            const numberElement = document.querySelector('.number-088');
-            setInterval(() => {
-                numberElement.style.textShadow = `0 0 ${20 + Math.random() * 30}px rgba(255, 255, 255, ${0.5 + Math.random() * 0.5})`;
-            }, 1000);
         });
     </script>
 </body>
