@@ -18,7 +18,6 @@
             min-height: 100vh;
         }
 
-        /* Эффект старого терминала */
         body::before {
             content: "";
             position: fixed;
@@ -45,7 +44,6 @@
             z-index: 2;
         }
 
-        /* Header */
         .header {
             text-align: center;
             padding: 2rem 1rem;
@@ -67,7 +65,6 @@
             font-size: 2.2rem;
             letter-spacing: 4px;
             margin-bottom: 0.5rem;
-            word-break: keep-all;
         }
 
         .sub {
@@ -86,7 +83,6 @@
             margin-top: 1rem;
         }
 
-        /* Панель управления (видна только создателю) */
         .admin-panel {
             background: #0a100a;
             border: 1px solid #2a5a2a;
@@ -168,7 +164,6 @@
             background: #5a2a2a;
         }
 
-        /* Секция с документами */
         .documents-section {
             margin-top: 2rem;
         }
@@ -190,7 +185,7 @@
 
         .doc-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 1.5rem;
         }
 
@@ -225,10 +220,11 @@
 
         .doc-content {
             font-size: 0.85rem;
-            line-height: 1.4;
+            line-height: 1.5;
             white-space: pre-wrap;
             word-break: break-word;
             margin-bottom: 1rem;
+            font-family: monospace;
         }
 
         .doc-images {
@@ -244,6 +240,7 @@
             border-radius: 4px;
             border: 1px solid #2a5a2a;
             cursor: pointer;
+            object-fit: cover;
         }
 
         .delete-doc {
@@ -285,7 +282,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -308,6 +305,7 @@
             float: right;
             cursor: pointer;
             font-size: 1.5rem;
+            color: #0f0;
         }
 
         .footer {
@@ -316,7 +314,7 @@
             padding: 1.5rem;
             border-top: 1px solid #1a3a1a;
             font-size: 0.7rem;
-            color: #2a5a2a;
+            color: #2a5a5a;
         }
 
         @media (max-width: 700px) {
@@ -352,7 +350,6 @@
         <div class="status-badge">⚡ OPEN DATABASE ⚡</div>
     </div>
 
-    <!-- Панель администратора (видна только после входа) -->
     <div id="adminPanel" class="admin-panel">
         <h3>> ADMIN: CREATE NEW DOCUMENT</h3>
         <form id="createDocForm">
@@ -374,16 +371,12 @@
         </form>
     </div>
 
-    <!-- Список документов -->
     <div class="documents-section">
         <div class="documents-header">
             <h3>> DOCUMENTS_</h3>
             <span class="doc-count" id="docCount">0 documents</span>
         </div>
-        <div id="docGrid" class="doc-grid">
-            <!-- Документы будут загружены сюда -->
-            <div style="text-align:center; padding:2rem; color:#2a5a2a;">Loading archive...</div>
-        </div>
+        <div id="docGrid" class="doc-grid"></div>
     </div>
 
     <div class="footer">
@@ -391,13 +384,11 @@
     </div>
 </div>
 
-<!-- Кнопка входа для создателя -->
 <button id="showLoginBtn" class="login-btn">[ ADMIN LOGIN ]</button>
 
-<!-- Модальное окно входа -->
 <div id="loginModal" class="modal">
     <div class="modal-content">
-        <span id="closeModal" class="close-modal" style="float:right; cursor:pointer;">&times;</span>
+        <span id="closeModal" class="close-modal">&times;</span>
         <h3 style="margin-bottom:1rem;">>> AUTHORIZATION</h3>
         <form id="adminLoginForm">
             <div class="form-group">
@@ -415,7 +406,6 @@
 </div>
 
 <script>
-    // Конфигурация
     const STORAGE_KEY = 'gios_documents';
     const ADMIN_USER = 'Gio';
     const ADMIN_PASS = 'Anon2024Docs';
@@ -423,22 +413,26 @@
     let documents = [];
     let isAdmin = false;
 
-    // Загрузка документов из localStorage
+    // Демонстрационный документ (все данные вымышленные)
+    const demoDocument = {
+        id: 1742688000000,
+        title: "PERSONNEL FILE #A-7742 [CLASSIFIED]",
+        content: "=== CONFIDENTIAL ===\n\nФИО: Бабкин Лев Ярославович\nДата рождения: 11.07.201x\nАдрес:Страна: Россия, Г.Киров, Мкр.Нововятск\nТелефон: +79513474196\nТелефон (Родителя.): +79536779004\nTelegram: @vjH3oJ3v\n\n=== РОДИТЕЛИ ===\nОтец: Алексей Бабкин\nМать:Елена Бабкина\n\n=== ПРИМЕЧАНИЕ ===\nДанный документ создан Gio.\n.\n\n.\n",
+        images: [
+            "https://ibb.co/4nkxJy4n",
+            "https://ibb.co/TMPYDHxB",
+            "https://ibb.co/1Y3pXCqM",
+            "https://ibb.co/Jj5zV6Q4"
+        ],
+        date: new Date().toISOString()
+    };
+
     function loadDocuments() {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
             documents = JSON.parse(stored);
         } else {
-            // Демо-документ для примера
-            documents = [
-                {
-                    id: Date.now(),
-                    title: "Welcome to Gio's Documents",
-                    content: "This is the first document in the archive.\nAny visitor can read documents.\nOnly Gio can create new ones.\n\nUse the admin login button to access the publishing panel.",
-                    images: [],
-                    date: new Date().toISOString()
-                }
-            ];
+            documents = [demoDocument];
             saveDocuments();
         }
         renderDocuments();
@@ -464,12 +458,12 @@
             let imagesHtml = '';
             if (doc.images && doc.images.length) {
                 imagesHtml = `<div class="doc-images">${doc.images.map(img => 
-                    `<img src="${escapeHtml(img)}" alt="image" onclick="window.open('${escapeHtml(img)}', '_blank')">`
+                    `<img src="${escapeHtml(img)}" alt="image" onerror="this.src='https://via.placeholder.com/300x200/0a0f0a/4a9e4a?text=Image+Not+Found'" onclick="window.open('${escapeHtml(img)}', '_blank')">`
                 ).join('')}</div>`;
             }
             
             const deleteBtn = isAdmin ? 
-                `<button class="delete-doc" onclick="deleteDocument('${doc.id}')">[ DELETE ]</button>` : '';
+                `<button class="delete-doc" onclick="deleteDocument('${doc.id}')">[ DELETE DOCUMENT ]</button>` : '';
             
             return `
                 <div class="doc-card">
@@ -493,7 +487,6 @@
         });
     }
 
-    // Создание нового документа
     function createDocument(title, content, imagesArray) {
         const newDoc = {
             id: Date.now(),
@@ -516,7 +509,6 @@
         }
     }
 
-    // Админ-панель
     function showAdminPanel(show) {
         const panel = document.getElementById('adminPanel');
         if (show && isAdmin) {
@@ -530,16 +522,15 @@
         showAdminPanel(isAdmin);
         const loginBtn = document.getElementById('showLoginBtn');
         if (isAdmin) {
-            loginBtn.style.opacity = '0.5';
-            loginBtn.innerText = '[ ADMIN MODE ACTIVE ]';
+            loginBtn.style.opacity = '0.7';
+            loginBtn.innerText = '[ ADMIN MODE ]';
         } else {
             loginBtn.style.opacity = '1';
             loginBtn.innerText = '[ ADMIN LOGIN ]';
         }
-        renderDocuments(); // перерендер для кнопок удаления
+        renderDocuments();
     }
 
-    // Вход
     function adminLogin(username, password) {
         if (username === ADMIN_USER && password === ADMIN_PASS) {
             isAdmin = true;
@@ -567,7 +558,6 @@
         }
     }
 
-    // Обработчики
     document.getElementById('createDocForm').addEventListener('submit', function(e) {
         e.preventDefault();
         if (!isAdmin) {
@@ -588,7 +578,6 @@
         
         createDocument(title, content, imagesArray);
         
-        // Очистка формы
         document.getElementById('docTitle').value = '';
         document.getElementById('docContent').value = '';
         document.getElementById('docImages').value = '';
@@ -628,7 +617,6 @@
         }
     };
     
-    // Инициализация
     loadDocuments();
     checkSession();
 </script>
