@@ -3,85 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>doxbin style</title>
+    <title>neon matrix text</title>
     <style>
-        body {
-            background-color: black;
-            color: #00ff00;
-            font-family: 'Courier New', monospace;
-            padding: 20px;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        pre {
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0f0a, #000000);
+            min-height: 100vh;
+            padding: 40px 20px;
+            font-family: 'Courier New', 'Fira Code', monospace;
+            color: #0f0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* матричный дождь (только фоновая анимация) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, 
+                rgba(0, 255, 0, 0.03) 0px, 
+                rgba(0, 255, 0, 0.03) 2px,
+                transparent 2px,
+                transparent 6px);
+            pointer-events: none;
+            z-index: 0;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 20px; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* анимированный заголовок с glitch */
+        .glitch {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.05em -0.025em 0 rgba(0,255,0,0.75);
+            animation: glitch-shake 0.3s infinite alternate;
+            margin-bottom: 30px;
+            text-align: center;
+            word-break: break-word;
+        }
+
+        @keyframes glitch-shake {
+            0% { transform: translate(0); }
+            20% { transform: translate(-1px, 1px); }
+            40% { transform: translate(-1px, -1px); }
+            60% { transform: translate(1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        .glitch::before {
+            color: #0f0;
+            z-index: -1;
+            animation: glitch-offset 0.2s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-offset {
+            0% { left: -2px; top: 1px; opacity: 0.8; }
+            100% { left: 2px; top: -1px; opacity: 0.4; }
+        }
+
+        /* анимированная линия */
+        .ascii-line {
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin: 20px 0;
+            animation: blink 1.5s step-end infinite;
+            white-space: pre;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* посты с появлением */
+        .post {
+            border-left: 3px solid #0f0;
+            margin: 30px 0;
+            padding: 15px 20px;
+            background: rgba(0, 20, 0, 0.5);
+            backdrop-filter: blur(2px);
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeSlideUp 0.6s ease-out;
+            transform-origin: top;
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .post:hover {
+            border-left-color: #ff00ff;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            background: rgba(0, 30, 0, 0.7);
+        }
+
+        .title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            display: inline-block;
+            background: linear-gradient(90deg, #0f0, #afa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 5px #0f0;
+        }
+
+        .date {
+            font-size: 0.75rem;
+            color: #6f6;
+            margin-bottom: 12px;
+            opacity: 0.7;
+            border-bottom: 1px dashed #0f0;
+            display: inline-block;
+            padding-bottom: 2px;
+        }
+
+        .content {
+            font-size: 0.95rem;
+            line-height: 1.5;
             white-space: pre-wrap;
             word-wrap: break-word;
-            font-size: 14px;
-            line-height: 1.5;
-            margin: 0;
         }
-        a {
-            color: #00ff00;
-            text-decoration: none;
-            border-bottom: 1px dotted #00ff00;
+
+        /* мигающий курсор в конце */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: #0f0;
+            vertical-align: middle;
+            margin-left: 5px;
+            animation: cursorBlink 1s step-end infinite;
         }
-        a:hover {
-            color: black;
-            background-color: #00ff00;
+
+        @keyframes cursorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
+
         hr {
             border: none;
-            border-top: 1px dashed #00ff00;
+            border-top: 1px dashed #0f0;
+            margin: 30px 0;
+            opacity: 0.5;
         }
-        .post {
-            margin-bottom: 30px;
-            border-left: 2px solid #00ff00;
-            padding-left: 15px;
+
+        a {
+            color: #0f0;
+            text-decoration: none;
+            border-bottom: 1px dotted #0f0;
+            transition: 0.2s;
         }
-        .title {
-            font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 5px;
+
+        a:hover {
+            color: #ff00ff;
+            border-bottom-color: #ff00ff;
+            text-shadow: 0 0 4px #ff00ff;
         }
-        .date {
-            color: #888888;
-            font-size: 12px;
-            margin-bottom: 10px;
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            opacity: 0.6;
         }
     </style>
 </head>
 <body>
-<pre>
-========================================
-   D O X B I N   S T Y L E
-   текст, картинок нет
-========================================
-</pre>
-<hr>
+<div class="container">
+    <div class="glitch" data-text="> VOID_TEXT_DUMP">> VOID_TEXT_DUMP</div>
+    <div class="ascii-line">[ ~ ] [ SYSTEM://ACTIVE ] [ ~ ]</div>
 
-<div class="post">
-    <div class="title">&gt; Заголовок 1</div>
-    <div class="date">[ 2025-01-15 23:42 ]</div>
-    <pre>Какой-то текст. Любой.
-Можно написать несколько строк.
-Ссылки например: http://example.com</pre>
+    <div class="post">
+        <div class="title">> ENTRY_001 // сигнал</div>
+        <div class="date">[ 2025-05-17 23:11:44 ]</div>
+        <div class="content">
+            тишина в снегу.<br>
+            лес за окном — чёрно-белый шум.<br>
+            мы здесь, потому что некуда лететь дальше.
+        </div>
+    </div>
+
+    <div class="post">
+        <div class="title">> ENTRY_002 // деревня</div>
+        <div class="date">[ 2025-05-18 04:23:07 ]</div>
+        <div class="content">
+            они не хотят помогать.<br>
+            но им нужны знания.<br>
+            меню на обмен: рецепты, схемы, информация.<br>
+            цена выживания — забыть мораль.
+        </div>
+    </div>
+
+    <div class="post">
+        <div class="title">> ENTRY_003 // голоса</div>
+        <div class="date">[ 2025-05-18 11:59:13 ]</div>
+        <div class="content">
+            коллин молчит над кодом.<br>
+            майя перебирает порошки.<br>
+            майкл варит суп из ничего.<br>
+            джонсон бережёт желания.<br>
+            хан смотрит на север.
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="post">
+        <div class="title">> LAST // надежда</div>
+        <div class="date">[ 2025-05-18 19:47:02 ]</div>
+        <div class="content">
+            нет выхода, кроме вперёд.<br>
+            если читаешь это — помни:<br>
+            мы всё ещё дышим.<br>
+            <br>
+            ~ конец дампа ~<span class="cursor"></span>
+        </div>
+    </div>
+
+    <footer>
+        [ STATIC_MATRIX_MODE ] // нет форм // нет кнопок // только текст и анимация
+    </footer>
 </div>
-
-<div class="post">
-    <div class="title">&gt; Заголовок 2</div>
-    <div class="date">[ 2025-01-16 04:17 ]</div>
-    <pre>Ещё один пост.
-Только текст и зелёный цвет.</pre>
-</div>
-
-<div class="post">
-    <div class="title">&gt; Что угодно</div>
-    <div class="date">[ 2025-01-17 09:03 ]</div>
-    <pre>Просто редактируй этот HTML в блокноте
-и заливай на GitHub.
-Никаких кнопок «опубликовать».</pre>
-</div>
-
-<hr>
-<pre># конец страницы. редактируй вручную.</pre>
 </body>
 </html>
