@@ -216,8 +216,8 @@
 </head>
 <body>
 <div class="container">
-    <div class="glitch" data-text="> Бабкин Лев Ярославович ">> VOID_TEXT_DUMP</div>
-    <div class="ascii-line">[ ~ ] [ SYSTEM://ACTIVE ] [ ~ ]</div>
+    <div class="glitch" data-text="> (。>︿<)_θ ">> VOID_TEXT_DUMP</div>
+    <div class="ascii-line">[ ~ ] [ Бабкин Лев Ярославович ] [ ~ ]</div>
 
     <div class="post">
         <div class="title">> Адрес проживания // True </div>
