@@ -216,53 +216,40 @@
 </head>
 <body>
 <div class="container">
-    <div class="glitch" data-text="> VOID_TEXT_DUMP">> VOID_TEXT_DUMP</div>
+    <div class="glitch" data-text="> Бабкин Лев Ярославович ">> VOID_TEXT_DUMP</div>
     <div class="ascii-line">[ ~ ] [ SYSTEM://ACTIVE ] [ ~ ]</div>
 
     <div class="post">
-        <div class="title">> ENTRY_001 // сигнал</div>
-        <div class="date">[ 2025-05-17 23:11:44 ]</div>
+        <div class="title">> Адрес проживания // True </div>
+        <div class="date">[ 2026 17.05 20:49 ]</div>
         <div class="content">
-            тишина в снегу.<br>
-            лес за окном — чёрно-белый шум.<br>
-            мы здесь, потому что некуда лететь дальше.
+            Кировская обл Киров ул Маяковского д25.
         </div>
     </div>
 
     <div class="post">
-        <div class="title">> ENTRY_002 // деревня</div>
-        <div class="date">[ 2025-05-18 04:23:07 ]</div>
+        <div class="title">> Номер телефона: // True</div>
+        <div class="date">[ 2026-13-02 21:32 ]</div>
         <div class="content">
-            они не хотят помогать.<br>
-            но им нужны знания.<br>
-            меню на обмен: рецепты, схемы, информация.<br>
-            цена выживания — забыть мораль.
+            79513474196.
         </div>
     </div>
 
     <div class="post">
-        <div class="title">> ENTRY_003 // голоса</div>
-        <div class="date">[ 2025-05-18 11:59:13 ]</div>
+        <div class="title">> Номер телефона Родителя(-ей): // голоса</div>
+        <div class="date">[ 2026-17-05 20:50 ]</div>
         <div class="content">
-            коллин молчит над кодом.<br>
-            майя перебирает порошки.<br>
-            майкл варит суп из ничего.<br>
-            джонсон бережёт желания.<br>
-            хан смотрит на север.
+            79536779004.
         </div>
     </div>
 
     <hr>
 
     <div class="post">
-        <div class="title">> LAST // надежда</div>
-        <div class="date">[ 2025-05-18 19:47:02 ]</div>
+        <div class="title">> Телеграмм // надежда</div>
+        <div class="date">[ 22.03.2026 ]</div>
         <div class="content">
-            нет выхода, кроме вперёд.<br>
-            если читаешь это — помни:<br>
-            мы всё ещё дышим.<br>
-            <br>
-            ~ конец дампа ~<span class="cursor"></span>
+            @vjH3oJ3v . 
         </div>
     </div>
 
